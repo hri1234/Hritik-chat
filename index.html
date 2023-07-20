@@ -32,7 +32,7 @@
 			placeholder="Message"
 			id="message">
 		<button class="bg-blue-500 rounded-md p-2
-					text-white mt-5">
+					text-white mt-5" id="sound" onclick="Beep()" onmouseover="changeToBlackColor()" onmouseout="changeToBlueColor()"  >
 			Send
 		</button>
 	</form>
@@ -43,16 +43,17 @@
 </body>
 <script src="/socket.io/socket.io.js"></script>
 <script>
+	alert("welcome to Hritik Talk")
 	let socket = io();
 
 	let form = document.getElementById('form');
 	let myname = document.getElementById('myname');
 	let message = document.getElementById('message');
 	let messageArea = document.getElementById("messageArea");
-	let code = prompt("Please enter six digit code to enter hritik chat", "")
-	function Email(){
+	let code = prompt("Please enter six digit code to enter hritik chat")
+	 function Email(){
 	let sub =  parseInt(code)
-	if(isNaN(sub)|| sub==321456){
+	if( sub===321456 ){
 	form.addEventListener("submit", (e) => {
 		e.preventDefault();
 
@@ -67,22 +68,60 @@
 	socket.on("send name", (username) => {
 		let name = document.createElement("p");
 		name.style.backgroundColor = "black";
-		name.style.width = "100%";
+		name.style.width = "70%";
+		name.style.fontSize='20px'
+		name.style.border='3px soid grey'
+		name.style.borderRadius='28px'
+		name.style.boxShadow='2px 3px 2px 3px grey'
 		name.style.textAlign = "center";
 		name.style.color = "white";
+		name.style.fontStyle="italic"
 		name.textContent = username + ":";
 		messageArea.appendChild(name);
 	});
 
 	socket.on("send message", (chat) => {
-		let chatContent = document.createElement("p");
+		let chatContent = document.createElement("h1");
+		chatContent.style.color="red"
+		chatContent.style.backgroundColor="#fff"
+		chatContent.style.width="75%"
+		chatContent.style.border="3px solid black"
+		chatContent.style.textAlign = "left"
+		chatContent.style.borderRadius = "28px";
+		chatContent.style.fontSize='22px'
+		chatContent.style.paddingLeft="18px"
 		chatContent.textContent = chat;
 		messageArea.appendChild(chatContent);
 	});
-	}else{
-		alert('you enter wroung code'+"",+sub)
+		alert('now you can enter')
+	}if(sub === " "){
+		alert('you enter nothing',+" ",+sub)
+	}else
+	{
+		alert('you enter wrong code',+" ",+sub)
 	}
 	} Email()
+	function changeToBlackColor(){
+		var change= document.getElementById("sound")
+		change.style.backgroundColor="black"
+		change.style.fontSize="21px"
+		change.style.color="red"
+		change.style.transition="0.5s"
+	} 
+	function changeToBlueColor(){
+		var conDition = document.getElementById("sound")
+		conDition .style.backgroundColor="blue"
+		conDition .style.fontSize="19px"
+		conDition .style.color="white"
+		conDition.style.transition="0.5s"
+	}
+
+	function Beep() {
+            var audio = new Audio(
+'https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3');
+            audio.play();
+        }
+
 </script>
 
 </html>
